@@ -307,7 +307,6 @@ return (
               padding: "5px 10px",
               borderRadius: "5px",
               boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-              maxWidth:"40%"
               
             }}
           >
@@ -319,7 +318,7 @@ return (
                   marginTop: "10px", 
                   backgroundColor: "#444", 
                   padding: "5px", 
-                  borderRadius: "5px" ,
+                  borderRadius: "5px" 
                 }}>
                   <strong>Summary:</strong> {summary}
                 </div>

@@ -4,7 +4,59 @@ import { useLegiScanProxy } from '../hooks/useLegiScanProxy';
 import { fetchPrimaryBillText } from '../hooks/fetchPrimaryBillText';
 import React from 'react';
 
+
+
+
 function BillDetailPage() {
+
+
+  //popup box code
+
+  const [selection, setSelection] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [summary, setSummary] = useState("");
+  const [loadingSummary, setLoadingSummary] = useState(false);
+
+  const handleMouseUp = () => {
+    const selectedText = window.getSelection().toString();
+    if (selectedText) {
+      setSelection(selectedText);
+      setShowPopup(true);
+      setSummary("");
+    } else {
+      setShowPopup(false);
+    }
+  };
+
+  const summarizeText = async (text) => {
+    try {
+      setLoadingSummary(true);
+      const response = await fetch("http://localhost:5000/api/summarize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+
+      const data = await response.json();
+      setSummary(data.summary || "No summary returned");
+    } catch (err) {
+      console.error(err);
+      setSummary("Failed to summarize");
+    } finally {
+      setLoadingSummary(false);
+    }
+      
+  };
+
+  useEffect(() => {
+    document.addEventListener("mouseup", handleMouseUp);
+    return () => document.removeEventListener("mouseup", handleMouseUp);
+  }, []);
+
+  
+
+    // bill detail page code
+
   const { billId } = useParams();
   const navigate = useNavigate();
   const { data, loading, error } = useLegiScanProxy(`bill/${billId}`);
@@ -236,7 +288,48 @@ return (
             )}
         </div>
       </div>
+
+
+      <div style={{ padding: "50px" }}>
+        <p>
+          Highlight some text in this paragraph, and a popup will appear with your selection.
+        </p>
+
+        {showPopup && (
+          <div
+            style={{
+              ...fontBase,
+              position: "fixed",
+              top: "20px",
+              right:"20px" ,
+              backgroundColor: "#333",
+              color: "#fff",
+              padding: "5px 10px",
+              borderRadius: "5px",
+              boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+              
+            }}
+          >
+            <p><strong>Selected:</strong></p>
+            <button style = {{height: "30px", width: "50px"}}onClick={()=> summarizeText(selection)} disabled={loadingSummary}></button>
+            <div>
+              {summary && (
+                <div style={{ 
+                  marginTop: "10px", 
+                  backgroundColor: "#444", 
+                  padding: "5px", 
+                  borderRadius: "5px" 
+                }}>
+                  <strong>Summary:</strong> {summary}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
+
+    
   </div>
 );
 

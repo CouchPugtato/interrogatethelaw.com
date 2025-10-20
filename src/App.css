@@ -1,27 +1,12 @@
-
-/* .colors {
-  mainBackground: "#d49999ff",
-  background: "#ffffffff",
-  surface: "#fbf9f9ff",
-  textPrimary: "#111827",
-  textSecondary: "#4B5563",
-  accent: "#8a200dff",       
-  accentLight: "#b62a17ff",  
-  accentDark: "#882810ff",   
-  transluscent: "#aa2b2bff",
-} */
-
 .App {
   text-align: center;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  
 }
 
 .App-header {
-  
-  background-color: #3e4450;
+  background-color: #282c34;
   padding: 20px;
   color: white;
   margin-bottom: 20px;
@@ -29,56 +14,44 @@
 }
 
 main {
-  
-  font-family: "'Inter', sans-serif";
-  background-color:#d49999ff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 1200px;
-  border-radius: 20px;
-  
 }
 
 .bills-container {
-  background-color: white;
-  border-radius: 20px;
-  /* display: flex; */
-  width: 105%;
-  height: 50%;
+  display: flex;
+  width: 100%;
   gap: 20px;
 }
 
 .bills-list {
   flex: 1;
   text-align: left;
-  border: 10px solid #8a200dff;
-  border-radius: 10px;
-  padding: 40px;
-  /* max-height: px; */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  max-height: 600px;
   overflow-y: auto;
-  height: 98%;
- 
 }
 
 .bills-list-items {
   list-style: none;
   padding: 0;
-  height: 800px;
 }
 
 .bills-list-items li {
-  padding: 20px;
-  border-bottom: 1px solid #a34141;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
   cursor: pointer;
 }
 
 .bills-list-items li:hover {
-  background-color: #000000;
+  background-color: #f5f5f5;
 }
 
 .bills-list-items li.bill-item-clickable:hover {
-  background-color: #ffaaaa;
+  background-color: #e0f7fa;
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   transition: all 0.2s ease;
@@ -90,7 +63,7 @@ main {
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 20px;
-  max-height: 1000px;
+  max-height: 600px;
   overflow-y: auto;
 }
 

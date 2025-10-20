@@ -317,6 +317,56 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+//chat gpt summary call
+
+
+app.post("/api/summarize", async (req, res) => {
+  console.log("received");
+  try {
+    const { text , level} = req.body;
+
+    if (!text) return res.status(400).json({ error: "No text provided" });
+
+
+    let levelInstruction = "";
+
+    switch (level) {
+      case "easy": 
+        levelInstruction = "Summarize what the text is saying in one or two sentences that a middle schooler could understand";
+       console.log("easy")
+        break;
+      case "medium":
+        levelInstruction = "Summarize what the text is saying using clear, conversational language appropriate for a high school student.";
+       
+        break;
+      case "hard":
+        levelInstruction =  "Summarize what the text is saying using  precise, formal, and technical language appropriate for academic readers.";
+       
+        break;
+      default:
+        levelInstruction = "Summarize what the text is saying ";
+        
+    }
+    
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        { role: "system", content: text },
+        { role: "user", content: levelInstruction },
+      ],
+      max_tokens: 500,
+      temperature: 0.1,
+    });
+
+    const summary = response.choices[0]?.message?.content || "";
+    res.json({ summary });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to summarize" });
+  }
+});
+
 // Temp localhost for non production testing
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

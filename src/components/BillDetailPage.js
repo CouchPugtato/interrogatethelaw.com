@@ -4,7 +4,67 @@ import { useLegiScanProxy } from '../hooks/useLegiScanProxy';
 import { fetchPrimaryBillText } from '../hooks/fetchPrimaryBillText';
 import React from 'react';
 
+
+
+
 function BillDetailPage() {
+
+
+
+  //popup box code
+  const [readingLevel, setReadingLevel] = useState("");
+  const [selection, setSelection] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [summary, setSummary] = useState("");
+  const [loadingSummary, setLoadingSummary] = useState(false);
+
+  const handleDropdownChange = (event) => {
+  const value = event.target.value;
+  setReadingLevel(value);
+  console.log("Selected value:", value);
+  };
+
+
+  const handleMouseUp = () => {
+    const selectedText = window.getSelection().toString();
+    if (selectedText) {
+      setSelection(selectedText);
+      setShowPopup(true);
+      setSummary("");
+    } else {
+      setShowPopup(false);
+    }
+  };
+
+  const summarizeText = async (text) => {
+    try {
+      setLoadingSummary(true);
+      const response = await fetch("http://localhost:3001/api/summarize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, level: readingLevel }),
+      });
+
+      const data = await response.json();
+      setSummary(data.summary || "No summary returned");
+    } catch (err) {
+      console.error(err);
+      setSummary("Failed to summarize");
+    } finally {
+      setLoadingSummary(false);
+    }
+      
+  };
+
+  useEffect(() => {
+    document.addEventListener("mouseup", handleMouseUp);
+    return () => document.removeEventListener("mouseup", handleMouseUp);
+  }, []);
+
+  
+
+    // bill detail page code
+
   const { billId } = useParams();
   const navigate = useNavigate();
   const { data, loading, error } = useLegiScanProxy(`bill/${billId}`);
@@ -176,13 +236,15 @@ return (
         <button style={homeButtonStyle} onClick={handleGoHome}>
           Home
         </button>
-        <select style={dropdownStyle} defaultValue="">
-          <option value="" disabled>Select reading level</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
+        <select id = "myDropDown" style={dropdownStyle} value={readingLevel} onChange={handleDropdownChange}>
+          <option  value="disabled" disabled>Select reading level</option>
+          <option value="easy" >Easy</option>
+          <option value="medium" >Medium</option>
+          <option value="hard" >Hard</option>
         </select>
+    
       </div>
+
       <div name="backgroundBubble">
       {/* Main content */}
       <div style={billDetailContentStyle}>
@@ -236,7 +298,49 @@ return (
             )}
         </div>
       </div>
+
+
+      <div style={{ padding: "50px" }}>
+        <p>
+          Highlight some text in this paragraph, and a popup will appear with your selection.
+        </p>
+
+        {showPopup && (
+          <div
+            style={{
+              ...fontBase,
+              position: "fixed",
+              top: "20px",
+              right:"20px" ,
+              backgroundColor: "#333",
+              color: "#fff",
+              padding: "5px 10px",
+              borderRadius: "5px",
+              boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+              maxWidth:"40%"
+              
+            }}
+          >
+            <p><strong>Click to generate summary</strong></p>
+            <button style = {{height: "30px", width: "50px"}}onClick={()=> summarizeText(selection)} disabled={loadingSummary}></button>
+            <div>
+              {summary && (
+                <div style={{ 
+                  marginTop: "10px", 
+                  backgroundColor: "#444", 
+                  padding: "5px", 
+                  borderRadius: "5px" ,
+                }}>
+                  <strong>Summary:</strong> {summary}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
+
+    
   </div>
 );
 

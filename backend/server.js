@@ -3,6 +3,7 @@ const cors = require('cors');
 const fetch = require('node-fetch');
 const OpenAI = require('openai');
 const fs = require('fs')
+const pdfParse = require('pdf-parse');
 require('dotenv').config();
 
 const app = express();
@@ -304,6 +305,27 @@ app.get('/api/bill/:id/text/:docId', async (req, res) => {
   } catch (error) {
     console.error('Error fetching bill text from LegiScan:', error);
     res.status(500).json({ error: 'Failed to fetch bill text' });
+  }
+});
+
+// endpoint to convert PDF base64 to text
+app.post('/api/pdf-to-text', async (req, res) => {
+  try {
+    const { base64 } = req.body;
+    if (!base64) return res.status(400).json({ error: 'base64 is required' });
+
+    const buffer = Buffer.from(base64, 'base64');
+    const result = await pdfParse(buffer);
+    const text = result?.text || '';
+
+    if (!text || text.trim().length === 0) {
+      return res.status(200).json({ text: '', note: 'No text extracted (possibly image-only PDF).' });
+    }
+
+    res.json({ text });
+  } catch (error) {
+    console.error('Error extracting text from PDF:', error);
+    res.status(500).json({ error: 'Failed to extract PDF text' });
   }
 });
 

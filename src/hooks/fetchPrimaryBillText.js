@@ -21,7 +21,36 @@ export async function fetchPrimaryBillText(data, setBillText, setLoadingText) {
       else if (textData.doc) encodedContent = textData.doc;
       
       if (encodedContent) {
+        // detect PDF content to avoid rendering binary gibberish
+        const looksLikePdfBase64 = encodedContent.startsWith('JVBER');
+        let looksLikePdfDecoded = false;
         try {
+          const head = atob(encodedContent.slice(0, 16));
+          looksLikePdfDecoded = head.startsWith('%PDF');
+        } catch (_) {}
+        if (looksLikePdfBase64 || looksLikePdfDecoded) {
+  try {
+    const resp = await fetch(`${API_BASE_URL}/pdf-to-text`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ base64: encodedContent })
+    });
+    const result = await resp.json();
+    const extracted = result?.text || '';
+    if (extracted && extracted.trim().length > 0) {
+      const formattedText = await formatTextWithBackend(extracted);
+      setBillText(formattedText);
+      return;
+    }
+  } catch (pdfErr) {
+    console.error('PDF text extraction failed:', pdfErr);
+  }
+  const pdfEmbed = `<object data="data:application/pdf;base64,${encodedContent}" type="application/pdf" width="100%" height="800">This bill text is a PDF. <a href="data:application/pdf;base64,${encodedContent}" target="_blank" rel="noopener noreferrer">Open in new tab</a>.</object>`;
+  setBillText(pdfEmbed);
+  return;
+}
+         
+try {
           const decodedContent = atob(encodedContent);
           
           // fix basic character encoding issues
@@ -60,4 +89,4 @@ export async function fetchPrimaryBillText(data, setBillText, setLoadingText) {
     } finally {
       setLoadingText(false);
     }
-  };
+}

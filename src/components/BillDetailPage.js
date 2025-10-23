@@ -321,8 +321,22 @@ return (
               
             }}
           >
-            <p><strong>Click to generate summary</strong></p>
-            <button style = {{height: "30px", width: "50px"}}onClick={()=> summarizeText(selection)} disabled={loadingSummary}></button>
+            <button 
+              style={{
+                ...fontBase,
+                backgroundColor: colors.accent,
+                color: "#fff",
+                border: "none",
+                borderRadius: "6px",
+                padding: "8px 12px",
+                cursor: "pointer",
+                fontWeight: 600
+              }}
+              onClick={()=> summarizeText(selection)} 
+              disabled={loadingSummary}
+            >
+              {loadingSummary ? "Summarizing..." : "Click to generate summary"}
+            </button>
             <div>
               {summary && (
                 <div style={{ 

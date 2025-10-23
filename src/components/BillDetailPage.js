@@ -12,7 +12,7 @@ function BillDetailPage() {
 
 
   //popup box code
-  const [readingLevel, setReadingLevel] = useState("");
+  const [explainationLevel, setExplainationLevel] = useState("");
   const [selection, setSelection] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [summary, setSummary] = useState("");
@@ -20,7 +20,7 @@ function BillDetailPage() {
 
   const handleDropdownChange = (event) => {
   const value = event.target.value;
-  setReadingLevel(value);
+  setExplainationLevel(value);
   console.log("Selected value:", value);
   };
 
@@ -42,7 +42,7 @@ function BillDetailPage() {
       const response = await fetch("http://localhost:3001/api/summarize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, level: readingLevel }),
+        body: JSON.stringify({ text, level: explainationLevel }),
       });
 
       const data = await response.json();
@@ -83,21 +83,21 @@ function BillDetailPage() {
   
   if (loading) return (
     <div className="bill-detail-page">
-      <button className="home-button" onClick={handleGoHome}>← Home</button>
+      <button className="home-button" onClick={handleGoHome}>← Bills</button>
       <p>Loading bill details...</p>
     </div>
   );
   
   if (error) return (
     <div className="bill-detail-page">
-      <button className="home-button" onClick={handleGoHome}>← Home</button>
+      <button className="home-button" onClick={handleGoHome}>← Bills</button>
       <p>Error loading bill details: {error}</p>
     </div>
   );
   
   if (!data || !data.bill) return (
     <div className="bill-detail-page">
-      <button className="home-button" onClick={handleGoHome}>← Home</button>
+      <button className="home-button" onClick={handleGoHome}>← Bills</button>
       <p>No bill details available</p>
     </div>
   );
@@ -234,13 +234,13 @@ return (
       {/* Top controls */}
       <div style={{ display: "flex", alignItems: "center", marginBottom: "24px" }}>
         <button style={homeButtonStyle} onClick={handleGoHome}>
-          Home
+          Bills
         </button>
-        <select id = "myDropDown" style={dropdownStyle} value={readingLevel} onChange={handleDropdownChange}>
-          <option  value="disabled" disabled>Select reading level</option>
-          <option value="easy" >Easy</option>
-          <option value="medium" >Medium</option>
-          <option value="hard" >Hard</option>
+        <select id = "myDropDown" style={dropdownStyle} value={explainationLevel} onChange={handleDropdownChange}>
+          <option  value="disabled" disabled>Select explaination level</option>
+          <option value="easy" >Brief</option>
+          <option value="medium" >Standard</option>
+          <option value="hard" >In Depth</option>
         </select>
     
       </div>

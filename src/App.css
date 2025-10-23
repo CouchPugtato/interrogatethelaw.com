@@ -34,9 +34,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 1200px;
   border-radius: 20px;
-  
+  padding: 40px 0; /* equal top and bottom buffer */
 }
 
 .bills-container {

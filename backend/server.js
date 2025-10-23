@@ -3,7 +3,6 @@ const cors = require('cors');
 const fetch = require('node-fetch');
 const OpenAI = require('openai');
 const fs = require('fs')
-const pdfParse = require('pdf-parse');
 require('dotenv').config();
 
 const app = express();
@@ -308,27 +307,6 @@ app.get('/api/bill/:id/text/:docId', async (req, res) => {
   }
 });
 
-// endpoint to convert PDF base64 to text
-app.post('/api/pdf-to-text', async (req, res) => {
-  try {
-    const { base64 } = req.body;
-    if (!base64) return res.status(400).json({ error: 'base64 is required' });
-
-    const buffer = Buffer.from(base64, 'base64');
-    const result = await pdfParse(buffer);
-    const text = result?.text || '';
-
-    if (!text || text.trim().length === 0) {
-      return res.status(200).json({ text: '', note: 'No text extracted (possibly image-only PDF).' });
-    }
-
-    res.json({ text });
-  } catch (error) {
-    console.error('Error extracting text from PDF:', error);
-    res.status(500).json({ error: 'Failed to extract PDF text' });
-  }
-});
-
 // serve static files in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('../build'));
@@ -349,13 +327,11 @@ app.post("/api/summarize", async (req, res) => {
 
     if (!text) return res.status(400).json({ error: "No text provided" });
 
-
     let levelInstruction = "";
 
     switch (level) {
       case "easy": 
         levelInstruction = "Summarize what the text is saying in one or two sentences that a middle schooler could understand";
-       console.log("easy")
         break;
       case "medium":
         levelInstruction = "Summarize what the text is saying using clear, conversational language appropriate for a high school student.";
@@ -374,8 +350,8 @@ app.post("/api/summarize", async (req, res) => {
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
-        { role: "system", content: text },
-        { role: "user", content: levelInstruction },
+        { role: "system", content: levelInstruction },
+        { role: "user", content: text },
       ],
       max_tokens: 500,
       temperature: 0.1,

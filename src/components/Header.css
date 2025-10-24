@@ -1,0 +1,52 @@
+/* === App Header === */
+.App-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(128, 24, 10, 0.85); /* maroon translucent */
+  backdrop-filter: blur(10px); /* glassy effect */
+  padding: 15px 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 20px;
+}
+
+/* Header title/logo */
+.App-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+}
+
+/* === Navigation Bar inside Header === */
+.nav-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Nav links / buttons */
+.nav-bar a,
+.nav-bar button {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1); /* translucent button */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover effect */
+.nav-bar a:hover,
+.nav-bar button:hover {
+  background: linear-gradient(120deg, #b62a17, #da9494, #ff7f7f);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(182, 42, 23, 0.4);
+}

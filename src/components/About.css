@@ -1,0 +1,45 @@
+.about-container {
+  max-width: 900px;
+  margin: 40px auto 0;
+  padding: 30px;
+  background: rgba(241, 239, 239, 0.08); /* translucent glass effect */
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px); /* glassy blur */
+  color: #fff; /* text color */
+  font-family: 'Inter', sans-serif;
+  line-height: 1.7;
+  animation: fadeIn 1s ease forwards;
+}
+
+/* Heading styles */
+.about-container h1 {
+  margin-top: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(120deg, #b62a17, #da9494, #ff7f7f);
+  -webkit-background-clip: text;
+  margin-bottom: 20px;
+  color: #ffffff
+}
+
+/* Paragraph styles */
+.about-container p {
+  margin: 16px 0;
+  font-size: 1rem;
+  opacity: 0.95;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Optional subtle gradient animation for background */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Fade-in effect */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}

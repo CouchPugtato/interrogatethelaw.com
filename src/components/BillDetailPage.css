@@ -1,0 +1,172 @@
+/* === Gradient Animation === */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.bg-gradient-animate {
+  background: linear-gradient(135deg, #5b0a0a, #8a1e1e, #b83232, #5b0a0a);
+  background-size: 400% 400%;
+  animation: gradient 20s ease infinite;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: "Inter", sans-serif;
+  padding: 3rem 1rem;
+  color: #111;
+}
+
+/* === Bill Card (Glassmorphic White Surface) === */
+.bill-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(91, 10, 10, 0.25);
+  padding: 2.5rem 3rem;
+  color: #1a1a1a;
+  max-width: 980px;
+  width: 100%;
+  animation: fadeIn 0.6s ease-in-out;
+  border: 1px solid rgba(139, 0, 0, 0.25);
+}
+
+/* === Fade-in Animation === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Header Controls === */
+.bill-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* === Buttons (Rich Maroon Gradients) === */
+.home-button {
+  background: linear-gradient(135deg, #b10f2e, #8a1e1e, #5b0a0a);
+  border: none;
+  border-radius: 12px;
+  padding: 0.8rem 1.6rem;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+}
+
+.home-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(139, 0, 0, 0.45);
+}
+
+/* === Dropdown === */
+.level-select {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #8a1e1e;
+  color: #111;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  outline: none;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 2px 10px rgba(139, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.level-select:hover {
+  border-color: #b10f2e;
+  box-shadow: 0 4px 15px rgba(177, 15, 46, 0.25);
+}
+
+.level-select option {
+  background: #fff;
+  color: #111;
+}
+
+/* === Section Cards === */
+.section-card {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 18px;
+  padding: 1.7rem;
+  margin-bottom: 2rem;
+  text-align: left;
+  border: 1.5px solid rgba(139, 0, 0, 0.25);
+  box-shadow: 0 4px 18px rgba(139, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.section-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(139, 0, 0, 0.18);
+  border-color: rgba(177, 15, 46, 0.4);
+}
+
+/* === Section Titles === */
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #8a1e1e;
+  margin-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(177, 15, 46, 0.35);
+  padding-bottom: 0.5rem;
+}
+
+/* === Text === */
+.section-card p,
+.section-card li {
+  color: #333;
+  line-height: 1.65;
+}
+
+.section-card ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+/* === Popup Summary === */
+.summary-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(41, 39, 39, 0.98);
+  color: #fdfdfd;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  border: 2px solid #8a1e1e;
+  box-shadow: 0 8px 25px rgba(91, 10, 10, 0.3);
+  max-width: 40%;
+  animation: slideIn 0.4s ease-out;
+}
+
+/* === Popup Animation === */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* === Popup Button === */
+.summary-popup button {
+  background: linear-gradient(135deg, #8a1e1e, #b10f2e, #5b0a0a);
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.summary-popup button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px rgba(139, 0, 0, 0.4);
+}

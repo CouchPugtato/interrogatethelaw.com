@@ -30,7 +30,9 @@
 main {
   
   font-family: "'Inter', sans-serif";
-  background-color:#d49999ff;
+  background:linear-gradient(120deg, #db9e9e, #7c1313, #ff9999, #ffb3b3);
+  background-size: 300% 300%;
+  animation: gradientFlow 20s ease infinite;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,7 +64,8 @@ main {
 .bills-list-items {
   list-style: none;
   padding: 0;
-  height: 800px;
+  max-height: 80vh; 
+  overflow-y: auto;
 }
 
 .bills-list-items li {
@@ -71,17 +74,37 @@ main {
   cursor: pointer;
 }
 
+.bills-list-items li {
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08); /* translucent glass effect */
+  border: 2px solid rgba(182, 42, 23, 0.2); /* subtle maroon outline */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px); /* glassy blur effect */
+  color: #000000; /* text color for contrast */
+}
+
 .bills-list-items li:hover {
-  background-color: #000000;
+  background: linear-gradient(120deg, #b62a17, #8a1a1a, #da9494);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(182, 42, 23, 0.4);
+  transition: all 0.25s ease;
+}
+
+/* For clickable items that need emphasis */
+.bills-list-items li.bill-item-clickable {
+  font-weight: 600;
 }
 
 .bills-list-items li.bill-item-clickable:hover {
-  background-color: #ffaaaa;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(120deg, #da9494, #ff7f7f, #b62a17);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(182, 42, 23, 0.5);
   transition: all 0.2s ease;
 }
-
 .bill-detail {
   flex: 2;
   text-align: left;

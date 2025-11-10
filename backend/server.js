@@ -1,6 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const fetch = require('node-fetch');
+// Ensure fetch is available globally for libraries that expect it (e.g., OpenAI)
+if (typeof globalThis.fetch !== 'function') {
+  globalThis.fetch = fetch;
+}
 const OpenAI = require('openai');
 const fs = require('fs')
 require('dotenv').config();
@@ -16,6 +20,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 const openai = new OpenAI({
   apiKey: OPENAI_API_KEY,
+  fetch, // pass explicit fetch for environments without global fetch
 });
 
 const formatPrompt = fs.readFileSync('format_prompt.txt','utf8');

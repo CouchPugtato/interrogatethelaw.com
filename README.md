@@ -39,14 +39,7 @@ Tech highlights
 - Backend calls LegiScan for bill data and text; returns JSON/Base64 content.
 - Summarization posts highlighted text and selected level to the backend; backend uses OpenAI to respond.
 
-```mermaid
-flowchart LR
-  A[Browser (React)] -- GET /api/bills, /api/bill/:id, /api/bill/:id/text/:docId --> B[Express Backend]
-  B -- LegiScan API --> C[(LegiScan)]
-  A -- POST /api/summarize {text, level} --> B
-  B -- OpenAI Chat Completions --> D[(OpenAI)]
-  A <-- JSON / HTML / Base64 --> B
-```
+~[Architecture flowchart](docs/img/architecture-flowchart.png)
 
 Key components
 - `src/components/BillsList.js`: State selector, bill list, navigation.

@@ -6,13 +6,9 @@ Browse and understand U.S. state and federal legislative bills with live updatin
 - [Overview](#overview)
 - [Architecture](#architecture)
 - [Screenshots / Demo](#screenshots--demo)
-- [Quick Start](#quick-start)
 - [Usage](#usage)
-- [Configuration](#configuration)
 - [Project Layout](#project-layout)
 - [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [Performance](#performance)
 
 ## Overview
 - Real‑time bill data and details per U.S. state (via LegiScanAPI).

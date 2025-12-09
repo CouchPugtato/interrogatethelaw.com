@@ -15,13 +15,11 @@ export function useLegiScanProxy(endpoint, params = {}) {
       try {
         setLoading(true);
         
-        const url = new URL(`${API_BASE_URL}/${endpoint}`);
+        // Build URL robustly for both absolute (dev) and relative (prod) bases
+        const query = new URLSearchParams(params).toString();
+        const url = `${API_BASE_URL}/${endpoint}${query ? `?${query}` : ''}`;
         
-        Object.entries(params).forEach(([key, value]) => {
-          url.searchParams.append(key, value);
-        });
-        
-        const response = await fetch(url.toString());
+        const response = await fetch(url);
         
         if (!response.ok) {
           throw new Error('Network response was not ok');

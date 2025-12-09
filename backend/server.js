@@ -1,9 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const fetch = require('node-fetch');
+// Ensure fetch is available globally for libraries that expect it (e.g., OpenAI)
+if (typeof globalThis.fetch !== 'function') {
+  globalThis.fetch = fetch;
+}
 const OpenAI = require('openai');
 const fs = require('fs')
-require('dotenv').config();
+// require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
 
 const app = express();
 app.use(cors());
@@ -16,9 +20,10 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 const openai = new OpenAI({
   apiKey: OPENAI_API_KEY,
+  fetch, // pass explicit fetch for environments without global fetch
 });
 
-const formatPrompt = fs.readFileSync('format_prompt.txt','utf8');
+const formatPrompt = fs.readFileSync(require('path').resolve(__dirname, 'format_prompt.txt'),'utf8');
 
 // conservative approximation 1 token ~ 3 characters
 function estimateTokens(text) {
@@ -309,7 +314,7 @@ app.get('/api/bill/:id/text/:docId', async (req, res) => {
 
 // serve static files in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('../build'));
+  app.use(express.static(require('path').resolve(__dirname, '..', 'build')));
   
   // Handle React routing, return all requests to React app
   app.get('*', (req, res) => {

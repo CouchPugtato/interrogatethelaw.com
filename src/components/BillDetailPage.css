@@ -1,4 +1,4 @@
-/* === Gradient Animation === */
+/*  Gradient Animation  */
 @keyframes gradient {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -18,7 +18,7 @@
   color: #111;
 }
 
-/* === Bill Card (Glassmorphic White Surface) === */
+/*  Bill Card (Glassmorphic White Surface)  */
 .bill-card {
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(20px);
@@ -32,13 +32,13 @@
   border: 1px solid rgba(139, 0, 0, 0.25);
 }
 
-/* === Fade-in Animation === */
+/*  Fade-in Animation  */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* === Header Controls === */
+/*  Header Controls  */
 .bill-controls {
   display: flex;
   align-items: center;
@@ -48,7 +48,7 @@
   gap: 1rem;
 }
 
-/* === Buttons (Rich Maroon Gradients) === */
+/*  Buttons (Rich Maroon Gradients)  */
 .home-button {
   background: linear-gradient(135deg, #b10f2e, #8a1e1e, #5b0a0a);
   border: none;
@@ -67,7 +67,7 @@
   box-shadow: 0 8px 20px rgba(139, 0, 0, 0.45);
 }
 
-/* === Dropdown === */
+/*  Dropdown  */
 .level-select {
   background: rgba(255, 255, 255, 0.9);
   border: 2px solid #8a1e1e;
@@ -92,7 +92,7 @@
   color: #111;
 }
 
-/* === Section Cards === */
+/*  Section Cards  */
 .section-card {
   background: rgba(255, 255, 255, 0.96);
   border-radius: 18px;
@@ -110,7 +110,7 @@
   border-color: rgba(177, 15, 46, 0.4);
 }
 
-/* === Section Titles === */
+/*  Section Titles  */
 .section-title {
   font-size: 1.4rem;
   font-weight: 700;
@@ -120,7 +120,7 @@
   padding-bottom: 0.5rem;
 }
 
-/* === Text === */
+/*  Text  */
 .section-card p,
 .section-card li {
   color: #333;
@@ -132,7 +132,7 @@
   padding-left: 1.5rem;
 }
 
-/* === Popup Summary === */
+/*  Popup Summary  */
 .summary-popup {
   position: fixed;
   top: 20px;
@@ -147,13 +147,13 @@
   animation: slideIn 0.4s ease-out;
 }
 
-/* === Popup Animation === */
+/*  Popup Animation  */
 @keyframes slideIn {
   from { opacity: 0; transform: translateX(40px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
-/* === Popup Button === */
+/*  Popup Button  */
 .summary-popup button {
   background: linear-gradient(135deg, #8a1e1e, #b10f2e, #5b0a0a);
   border: none;

@@ -7,7 +7,7 @@ if (typeof globalThis.fetch !== 'function') {
 }
 const OpenAI = require('openai');
 const fs = require('fs')
-// require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
+require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
 
 const app = express();
 app.use(cors());
@@ -30,7 +30,7 @@ function estimateTokens(text) {
   return Math.ceil(text.length / 3);
 }
 
-// function to split text by a gramatical feature
+// function to split text by a gramatical featurenpm
 function splitByFeature(featureStr, chunk, maxTokens, maxChars, separator = '') {
   const features = chunk.split(featureStr);
   if (features.length <= 1) return null;

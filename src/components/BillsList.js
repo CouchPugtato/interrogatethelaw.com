@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLegiScanProxy } from '../hooks/useLegiScanProxy';
 
 function BillsList() {
-  const [selectedState, setSelectedState] = useState('CA');
+  const [selectedState, setSelectedState] = useState('IL');
   const navigate = useNavigate();
   const { data, loading, error } = useLegiScanProxy('bills', { state: selectedState });
   

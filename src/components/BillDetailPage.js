@@ -11,7 +11,7 @@ function BillDetailPage() {
 
 
   //popup box code
-  const [explainationLevel, setExplainationLevel] = useState("easy");
+  const [explainationLevel, setExplainationLevel] = useState("medium");
   const [selection, setSelection] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [summary, setSummary] = useState("");

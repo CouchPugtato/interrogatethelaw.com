@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useLegiScanProxy } from '../hooks/useLegiScanProxy';
 import { fetchPrimaryBillText } from '../hooks/fetchPrimaryBillText';
+import { summarizeTextWithBackend } from '../hooks/summarizeTextWithBackend';
 import React from 'react';
 import './BillDetailPage.css';
-
-
 
 function BillDetailPage() {
 
@@ -39,17 +38,11 @@ function BillDetailPage() {
   const summarizeText = async (text) => {
     try {
       setLoadingSummary(true);
-      const response = await fetch("http://localhost:3001/api/summarize", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, level: explainationLevel }),
-      });
-
-      const data = await response.json();
-      setSummary(data.summary || "No summary returned");
+      const summaryText = await summarizeTextWithBackend(text, explainationLevel);
+      setSummary(summaryText);
     } catch (err) {
-      console.error(err);
-      setSummary("Failed to summarize");
+      console.error("Summarization error:", err);
+      setSummary(`Failed to summarize: ${err.message}`);
     } finally {
       setLoadingSummary(false);
     }

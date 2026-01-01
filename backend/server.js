@@ -13,6 +13,11 @@ require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 const app = express();
 app.use(cors());
 
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
@@ -327,11 +332,20 @@ if (process.env.NODE_ENV === 'production') {
 
 
 app.post("/api/summarize", async (req, res) => {
-  console.log("received");
+  console.log("Processing /api/summarize request");
   try {
-    const { text , level} = req.body;
+    if (!process.env.OPENAI_API_KEY) {
+      console.error("Missing OPENAI_API_KEY");
+      return res.status(500).json({ error: "Server configuration error: Missing API Key" });
+    }
 
-    if (!text) return res.status(400).json({ error: "No text provided" });
+    const { text , level} = req.body;
+    console.log(`Summarize request: level=${level}, textLength=${text ? text.length : 0}`);
+
+    if (!text) {
+      console.warn("Summarize request missing text");
+      return res.status(400).json({ error: "No text provided" });
+    }
 
     let levelInstruction = "";
 
@@ -352,7 +366,7 @@ app.post("/api/summarize", async (req, res) => {
         
     }
     
-
+    console.log("Calling OpenAI API...");
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
@@ -362,12 +376,16 @@ app.post("/api/summarize", async (req, res) => {
       max_tokens: 500,
       temperature: 0.1,
     });
+    console.log("OpenAI response received");
 
     const summary = response.choices[0]?.message?.content || "";
     res.json({ summary });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to summarize" });
+    console.error("Error in /api/summarize:", err);
+    res.status(500).json({ 
+      error: "Failed to summarize", 
+      details: err.message 
+    });
   }
 });
 

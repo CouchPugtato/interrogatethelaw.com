@@ -1,9 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const fetch = require('node-fetch');
-// Ensure fetch is available globally for libraries that expect it (e.g., OpenAI)
+const { Headers } = require('node-fetch');
+
+// Ensure fetch and Headers are available globally for libraries that expect it (e.g., OpenAI)
 if (typeof globalThis.fetch !== 'function') {
   globalThis.fetch = fetch;
+  globalThis.Headers = Headers;
 }
 const OpenAI = require('openai');
 const fs = require('fs');

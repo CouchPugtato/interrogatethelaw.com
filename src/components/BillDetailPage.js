@@ -11,16 +11,16 @@ function BillDetailPage() {
 
 
   //popup box code
-  const [explainationLevel, setExplainationLevel] = useState("");
+  const [explainationLevel, setExplainationLevel] = useState("easy");
   const [selection, setSelection] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [summary, setSummary] = useState("");
   const [loadingSummary, setLoadingSummary] = useState(false);
 
   const handleDropdownChange = (event) => {
-  const value = event.target.value;
-  setExplainationLevel(value);
-  console.log("Selected value:", value);
+    const value = event.target.value;
+    setExplainationLevel(value);
+    console.log("Selected value:", value);
   };
 
 
